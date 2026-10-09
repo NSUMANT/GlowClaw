@@ -15,7 +15,6 @@ import { defaultAgentConfig } from "../agent/types.ts";
 import type { Plan, PlanStep } from "./types.ts";
 import { createWebTools } from "./web-tools.ts";
 
-
 const planSchema = z.object({
   researchSummary: z.string().optional(),
   steps: z
@@ -105,7 +104,7 @@ const PLAN_INSTRUCTIONS = (codebase: string, hasWeb: boolean) =>
     "Keep it short: 1–15 steps.",
   ].join("\n");
 
-  export async function generatePlan(goal: string) {
+export async function generatePlan(goal: string) {
   const config = defaultAgentConfig();
   const tracker = new ActionTracker();
   const executor = new ToolExecutor(tracker, config);
