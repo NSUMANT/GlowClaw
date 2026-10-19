@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import { compileFunction } from "node:vm";
-import { runwakeup } from "./tui/wakeup";
+import { runWakeup } from "./tui/wakeup";
 
 
 const program=new Command();
@@ -18,6 +18,6 @@ program
     .description("show the banner and pick cli or telegram mode")
     .action(
     async()=>{
-        await runwakeup()
+        await runWakeup()
     });
 await program.parseAsync(process.argv);

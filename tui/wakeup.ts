@@ -1,11 +1,12 @@
-import {select,isCancel} from "@clack/prompts"
+import {select , isCancel} from "@clack/prompts";
 import chalk from "chalk"
-import figlet from "figlet"
+import figlet from "figlet";
 import { runCliMode } from "../modes/cli";
+import { runTelegramMode } from "../modes/telegram";
 
-const BANNER_FONT="ANSI Shadow";
-const SHADOW=chalk.hex("#5b4d9e");
-const FACE=chalk.hex('#e8dcf8').bold;
+const BANNER_FONT = 'ANSI Shadow';
+const SHADOW = chalk.hex('#5b4d9e');
+const FACE = chalk.hex('#e8dcf8').bold;
 
 function printBannerWithShadow(ascii: string) {
 
@@ -23,36 +24,36 @@ function printBannerWithShadow(ascii: string) {
   console.log();
 }
 
-export async function runwakeup()
-{
+
+
+export async function runWakeup() {
     let ascii:string;
-    try{
-        ascii=figlet.textSync("GlowClaw",{font:BANNER_FONT});
+    try {
+        ascii = figlet.textSync("Glowclaw" , {font:BANNER_FONT})
+    } catch (error) {
+        ascii = figlet.textSync("Glowclaw" , {font:"Standard"})
     }
-    catch(error)
-    {
-        ascii=figlet.textSync("GlowClaw",{font:"Standard"});
-    }
-    printBannerWithShadow(ascii);
-    const mode=await select({
-        message:"which mode you want to proceed with?",
+
+    printBannerWithShadow(ascii)
+
+    const mode = await select({
+        message:"Which mode you want to proceed with?",
         options:[
-            {value:'Cli',label:'CLI'},
-            {value:"Telegram",label:'Telegram'},
-            {value:"Exit",label:"exit"}]
+            {value:"cli" , label:"CLI"},
+            {value:"telegram" , label:"Telegram"},
+            {value:"exit" , label:"Exit"}
+        ]
     });
 
-    if(isCancel(mode)|| mode==='Exit')
-    {
-        console.log(chalk.dim('\nGoodBye\n'));
+    if(isCancel(mode || mode === "exit")){
+        console.log(chalk.dim('\n Goodbye. \n'));
         return;
     }
-    if(mode === 'Cli')
-    {
+
+    if(mode === "cli"){
         await runCliMode()
     }
-    else if(mode==='Telegram')
-    {
-        console.log(chalk.dim("starting telegram...."));
+    else if(mode === "telegram"){
+        await runTelegramMode()
     }
 }
